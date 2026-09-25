@@ -127,7 +127,6 @@ h1 i { color: var(--tomato); font-family: Georgia, serif; font-weight: 400; }
 .label-one { top: 8%; left: 7%; transform: rotate(-8deg); }
 .label-two { right: 1%; top: 35%; background: var(--tomato); color: #fff; transform: rotate(7deg); }
 .label-three { bottom: 12%; left: 7%; background: var(--lavender); color: #fff; transform: rotate(4deg); }
-.collage-caption { position: absolute; z-index: 3; right: 2%; bottom: 3%; width: 210px; margin: 0; color: rgba(255,255,255,.5); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .62rem; letter-spacing: .08em; line-height: 1.55; text-align: right; }
 
 .section-shell {
   width: min(var(--max), calc(100% - 64px));
@@ -364,7 +363,6 @@ footer > a:last-child { justify-self: end; }
   .language-switch > span:last-child { font-size: .78rem; }
   h1 { font-size: clamp(4.3rem, 23vw, 7rem); }
   .hero-intro { width: 100%; }
-  .collage-caption { display: none; }
   .signal-card { min-height: 220px; padding: 20px; border-radius: 18px; }
   .portal { grid-template-columns: 38px minmax(0,1fr) 42px; gap: 12px; min-height: 120px; }
   .portal-copy strong { font-size: 1.75rem; }
