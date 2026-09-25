@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1026" />
+    <meta name="description" content="Zhuiy 的个人主页：音乐、GEB、观星，以及一些正在发生的念头。" />
+    <title>Zhuiy — a small universe</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1026'/%3E%3Cpath d='M15 20h34L22 45h28' fill='none' stroke='%23c9ff43' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='49' cy='15' r='5' fill='%23ff5b45'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Zhuiy home">Zhuiy<span>.</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="#signals" data-zh="信号" data-en="Signals">信号</a>
+        <a href="#portals" data-zh="传送门" data-en="Portals">传送门</a>
+        <a href="#now" data-zh="此刻" data-en="Now">此刻</a>
+      </nav>
+      <button class="language-switch" id="language-switch" type="button" aria-label="Switch to English">
+        <span class="switch-side">A</span>
+        <span data-zh="翻面 / EN" data-en="Flip / 中">翻面 / EN</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="kicker" data-zh="信号已接收 · 北京时间未知" data-en="Signal received · local time unknown">信号已接收 · 北京时间未知</p>
+          <h1 id="hero-title">
+            <span data-zh="嗨，我是" data-en="Hi, I'm">嗨，我是</span>
+            <strong>Zhuiy</strong><i>.</i>
+          </h1>
+          <p class="hero-intro" data-zh="我收集声音、星光、奇怪的递归，以及那些暂时还没有名字的想法。这里不是简历，是我脑内几个频道同时播出的地方。" data-en="I collect sounds, starlight, peculiar recursions, and thoughts that do not have names yet. This is not a résumé; it is several channels in my head broadcasting at once.">
+            我收集声音、星光、奇怪的递归，以及那些暂时还没有名字的想法。这里不是简历，是我脑内几个频道同时播出的地方。
+          </p>
+          <a class="primary-link" href="#signals">
+            <span data-zh="开始漫游" data-en="Start wandering">开始漫游</span>
+            <span aria-hidden="true">↘</span>
+          </a>
+        </div>
+
+        <div class="hero-orbit" aria-label="Zhuiy's avatar in orbit">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <span class="orbit-label label-one">GEB</span>
+          <span class="orbit-label label-two">♪ 𝄞</span>
+          <span class="orbit-label label-three">α UMi</span>
+          <figure class="avatar-wrap">
+            <img src="assets/origin.jpg" alt="Zhuiy 的手绘头像：戴着高帽、咧嘴笑的小人" />
+          </figure>
+          <p class="orbit-caption" data-zh="一枚不太稳定的人造卫星" data-en="a mildly unstable artificial satellite">一枚不太稳定的人造卫星</p>
+        </div>
+      </section>
+
+      <section class="signals section-shell" id="signals" aria-labelledby="signals-title">
+        <header class="section-heading reveal">
+          <p class="section-number">01 / SIGNALS</p>
+          <h2 id="signals-title" data-zh="三个持续发射的频道" data-en="Three channels, always on">三个持续发射的频道</h2>
+          <p data-zh="它们偶尔互相串台。" data-en="They occasionally bleed into one another.">它们偶尔互相串台。</p>
+        </header>
+
+        <div class="signal-grid">
+          <article class="signal-card geb-card reveal">
+            <div class="card-topline">
+              <span>GEB / RECURSION</span>
+              <span>∞</span>
+            </div>
+            <h3 data-zh="这张卡片正在读这张卡片。" data-en="This card is reading this card.">这张卡片正在读这张卡片。</h3>
+            <p data-zh="喜欢《哥德尔、艾舍尔、巴赫》，尤其喜欢当严肃的问题拐个弯，突然变成笑话。" data-en="I like Gödel, Escher, Bach—especially when a serious question turns a corner and unexpectedly becomes a joke.">喜欢《哥德尔、艾舍尔、巴赫》，尤其喜欢当严肃的问题拐个弯，突然变成笑话。</p>
+            <button class="recursion-button" id="recursion-button" type="button">
+              <span data-zh="打开一个更小的这里" data-en="Open a smaller here">打开一个更小的这里</span>
+              <span aria-hidden="true">↳</span>
+            </button>
+            <div class="recursion-stage" id="recursion-stage" aria-live="polite"></div>
+          </article>
+
+          <article class="signal-card music-card reveal">
+            <div class="card-topline">
+              <span>MUSIC / SOUND</span>
+              <span>02:17</span>
+            </div>
+            <div class="equalizer" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <h3 data-zh="弹琴、做声音，也认真听。" data-en="Playing, making, and listening closely.">弹琴、做声音，也认真听。</h3>
+            <p data-zh="钢琴、音乐制作、古典音乐会，以及一张唱片如何把某个下午永久保存下来。" data-en="Piano, music production, classical concerts—and how a record can preserve an afternoon indefinitely.">钢琴、音乐制作、古典音乐会，以及一张唱片如何把某个下午永久保存下来。</p>
+            <a href="https://zhuiyy.github.io/My-Discs/web/index.html" target="_blank" rel="noreferrer">
+              <span data-zh="去唱片架" data-en="Visit the record shelf">去唱片架</span> ↗
+            </a>
+          </article>
+
+          <article class="signal-card sky-card reveal">
+            <div class="card-topline">
+              <span>NIGHT SKY / 40°N</span>
+              <span>✦</span>
+            </div>
+            <div class="constellation" aria-hidden="true">
+              <span style="--x: 12%; --y: 62%; --s: 6px"></span>
+              <span style="--x: 34%; --y: 35%; --s: 4px"></span>
+              <span style="--x: 58%; --y: 47%; --s: 8px"></span>
+              <span style="--x: 76%; --y: 18%; --s: 5px"></span>
+              <span style="--x: 89%; --y: 58%; --s: 4px"></span>
+              <i class="line line-a"></i><i class="line line-b"></i><i class="line line-c"></i><i class="line line-d"></i>
+            </div>
+            <h3 data-zh="抬头是一种低成本的远行。" data-en="Looking up is inexpensive long-distance travel.">抬头是一种低成本的远行。</h3>
+            <p data-zh="观星和天文摄影让我接受：有些光抵达时，它的故事早就结束了。" data-en="Stargazing and astrophotography remind me that some light arrives long after its story has ended.">观星和天文摄影让我接受：有些光抵达时，它的故事早就结束了。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="portals section-shell" id="portals" aria-labelledby="portals-title">
+        <header class="section-heading reveal">
+          <p class="section-number">02 / PORTALS</p>
+          <h2 id="portals-title" data-zh="从这里出去" data-en="Ways out of here">从这里出去</h2>
+          <p data-zh="每扇门后面都是另一个我。" data-en="There is another me behind every door.">每扇门后面都是另一个我。</p>
+        </header>
+
+        <div class="portal-list">
+          <a class="portal portal-discs reveal" href="https://zhuiyy.github.io/My-Discs/web/index.html" target="_blank" rel="noreferrer">
+            <span class="portal-index">01</span>
+            <span class="portal-copy"><strong>My Discs</strong><small data-zh="唱片、音乐会和最近听见的东西" data-en="Records, concerts, and recent listening">唱片、音乐会和最近听见的东西</small></span>
+            <span class="portal-mark" aria-hidden="true">◉</span>
+          </a>
+          <a class="portal portal-crabs reveal" href="https://zhuiyy.github.io/Me-with-a-big-big-band-of-crabs/" target="_blank" rel="noreferrer">
+            <span class="portal-index">02</span>
+            <span class="portal-copy"><strong>Big Big Band of Crabs</strong><small data-zh="GEB 笑话与一群坚持退稿的螃蟹" data-en="GEB jokes and crabs committed to rejection">GEB 笑话与一群坚持退稿的螃蟹</small></span>
+            <span class="portal-mark crab" aria-hidden="true">🦀</span>
+          </a>
+          <a class="portal portal-bili reveal" href="https://space.bilibili.com/492975677?spm_id_from=333.1007.0.0" target="_blank" rel="noreferrer">
+            <span class="portal-index">03</span>
+            <span class="portal-copy"><strong>BiliBili</strong><small data-zh="一些仅供开心的视频" data-en="Videos, strictly for fun">一些仅供开心的视频</small></span>
+            <span class="portal-mark" aria-hidden="true">▶</span>
+          </a>
+          <a class="portal portal-music reveal" href="https://music.163.com/#/artist?id=33216546" target="_blank" rel="noreferrer">
+            <span class="portal-index">04</span>
+            <span class="portal-copy"><strong>Netease Music</strong><small data-zh="我做的声音在这里" data-en="Sounds I have made live here">我做的声音在这里</small></span>
+            <span class="portal-mark" aria-hidden="true">♫</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="now section-shell" id="now" aria-labelledby="now-title">
+        <header class="section-heading reveal">
+          <p class="section-number">03 / NOW</p>
+          <h2 id="now-title" data-zh="最近在关注" data-en="Currently orbiting">最近在关注</h2>
+          <p data-zh="一些尚未长成文章的念头。" data-en="Thoughts that have not grown into essays yet.">一些尚未长成文章的念头。</p>
+        </header>
+
+        <!-- 最近关注：直接修改下面四条的 data-zh、data-en 和正文即可。 -->
+        <ol class="thought-list">
+          <li class="reveal"><time datetime="2026-09">SEP / 26</time><p data-zh="为什么有些旋律像已经认识很久的人？" data-en="Why do some melodies feel like people we have known for years?">为什么有些旋律像已经认识很久的人？</p><span>01</span></li>
+          <li class="reveal"><time datetime="2026-09">SEP / 26</time><p data-zh="观测者究竟给世界加了多少注释？" data-en="How many annotations does an observer add to the world?">观测者究竟给世界加了多少注释？</p><span>02</span></li>
+          <li class="reveal"><time datetime="2026-09">SEP / 26</time><p data-zh="一个委员会能否递归地拒绝它自己？" data-en="Can a committee recursively reject itself?">一个委员会能否递归地拒绝它自己？</p><span>03</span></li>
+          <li class="reveal"><time datetime="2026-09">SEP / 26</time><p data-zh="在概率很低的夜晚，等待一颗很亮的星。" data-en="Waiting for one bright star on a low-probability night.">在概率很低的夜晚，等待一颗很亮的星。</p><span>04</span></li>
+        </ol>
+      </section>
+
+      <section class="counter-section" aria-labelledby="counter-title">
+        <div class="counter-copy reveal">
+          <p class="section-number">04 / COLLECTIVE NONSENSE</p>
+          <h2 id="counter-title" data-zh="请为互联网增加一件没必要的事。" data-en="Please add one unnecessary event to the internet.">请为互联网增加一件没必要的事。</h2>
+          <p data-zh="这是全世界所有访客共同维护的数字。它不代表任何东西，这正是它珍贵的地方。" data-en="Every visitor shares this number. It represents nothing, which is precisely what makes it precious.">这是全世界所有访客共同维护的数字。它不代表任何东西，这正是它珍贵的地方。</p>
+        </div>
+        <div class="counter-console reveal">
+          <div class="counter-screen" aria-live="polite">
+            <span data-zh="全球累计" data-en="GLOBAL TOTAL">全球累计</span>
+            <strong id="global-count">—</strong>
+            <small id="counter-status" data-zh="正在联系全人类……" data-en="Contacting all humans…">正在联系全人类……</small>
+          </div>
+          <button class="world-button" id="world-button" type="button">
+            <span class="button-light" aria-hidden="true"></span>
+            <strong data-zh="难绷，按一下" data-en="Fine. Press it.">难绷，按一下</strong>
+            <small data-zh="每按一次，世界总数 +1" data-en="Each press adds one to the world">每按一次，世界总数 +1</small>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="footer-mark" href="#top">Z<span>.</span></a>
+      <p data-zh="由 Zhuiy 在地球上发出 · 但愿能抵达" data-en="Transmitted by Zhuiy from Earth · hopefully received">由 Zhuiy 在地球上发出 · 但愿能抵达</p>
+      <a href="#top"><span data-zh="返回轨道" data-en="Back to orbit">返回轨道</span> ↑</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
