@@ -22,7 +22,7 @@ function drawStarfield() {
     const radius = random(index + 200) * 1.55 + 0.3;
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2);
-    context.fillStyle = index % 11 === 0 ? "#c9ff43" : "rgba(255,255,255,.72)";
+    context.fillStyle = index % 11 === 0 ? "#f3c969" : "rgba(255,255,255,.72)";
     context.fill();
   }
 }
@@ -44,7 +44,7 @@ document.querySelector("#language-switch").addEventListener("click", () => {
   const targets = document.querySelectorAll("[data-zh][data-en]");
   if (window.gsap) {
     gsap.to(".switch-side", { rotation: "+=360", duration: 0.72, ease: "back.out(1.5)" });
-    gsap.to(".hero-orbit", { rotation: nextLanguage === "en" ? 3 : 0, duration: 0.8, ease: "power3.inOut" });
+    gsap.to(".hero-collage", { rotation: nextLanguage === "en" ? 1.5 : 0, duration: 0.55, ease: "power3.inOut" });
     gsap.to(targets, {
       autoAlpha: 0,
       y: -8,
@@ -105,11 +105,11 @@ async function readWorldCount() {
     const response = await fetch(`${counterEndpoint}?readOnly=true`, { headers: counterHeaders });
     if (!response.ok) throw new Error("counter unavailable");
     const data = await response.json();
-    document.querySelector("#global-count").textContent = formatCount(data.value || 0);
+    renderWorldCount(Math.max(displayedWorldCount, Number(data.value || 0) + pendingWorldClicks));
     updateCounterStatus("全人类目前的共同成果", "Humanity's collective achievement so far");
   } catch {
     const localCount = Number(localStorage.getItem("zhuiy-world-button") || 0);
-    document.querySelector("#global-count").textContent = formatCount(localCount);
+    renderWorldCount(Math.max(displayedWorldCount, localCount + pendingWorldClicks));
     updateCounterStatus("宇宙暂时失联，先记在这台设备上", "The universe is offline; keeping count on this device");
   }
 }
@@ -117,7 +117,7 @@ async function readWorldCount() {
 function launchCounterSparks(button) {
   if (!window.gsap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const rect = button.getBoundingClientRect();
-  const colors = ["#c9ff43", "#5de7ff", "#ff5b45", "#a7a0ff", "#ffffff"];
+  const colors = ["#f3c969", "#5de7ff", "#ff5b45", "#a7a0ff", "#ffffff"];
   for (let index = 0; index < 18; index += 1) {
     const spark = document.createElement("i");
     spark.className = "counter-spark";
@@ -132,35 +132,50 @@ function launchCounterSparks(button) {
       y: Math.sin(angle) * distance,
       scale: 0,
       autoAlpha: 0,
-      duration: 0.65 + Math.random() * 0.35,
+      duration: 0.36 + Math.random() * 0.18,
       ease: "power2.out",
       onComplete: () => spark.remove()
     });
   }
 }
 
-document.querySelector("#world-button").addEventListener("click", async (event) => {
+let displayedWorldCount = 0;
+let pendingWorldClicks = 0;
+let counterQueue = Promise.resolve();
+
+function renderWorldCount(value) {
+  displayedWorldCount = value;
+  const count = document.querySelector("#global-count");
+  count.textContent = formatCount(value);
+  count.dataset.value = String(value);
+}
+
+async function syncWorldClick() {
+  const response = await fetch(counterEndpoint, { headers: counterHeaders });
+  if (!response.ok) throw new Error("counter unavailable");
+  const data = await response.json();
+  pendingWorldClicks -= 1;
+  renderWorldCount(Math.max(displayedWorldCount, Number(data.value || 0) + pendingWorldClicks));
+  updateCounterStatus("你刚刚改变了世界（约 0%）", "You changed the world (by approximately 0%)");
+}
+
+document.querySelector("#world-button").addEventListener("click", (event) => {
   const button = event.currentTarget;
-  button.disabled = true;
   button.classList.add("is-pressed");
+  window.setTimeout(() => button.classList.remove("is-pressed"), 90);
   launchCounterSparks(button);
-  try {
-    const response = await fetch(counterEndpoint, { headers: counterHeaders });
-    if (!response.ok) throw new Error("counter unavailable");
-    const data = await response.json();
-    document.querySelector("#global-count").textContent = formatCount(data.value || 0);
-    updateCounterStatus("你刚刚改变了世界（约 0%）", "You changed the world (by approximately 0%)");
-  } catch {
+  pendingWorldClicks += 1;
+  renderWorldCount(displayedWorldCount + 1);
+  updateCounterStatus("已收到，正在同步这一次点击", "Received—syncing this click");
+  if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.fromTo("#global-count", { scale: 1.12, color: "#f3c969" }, { scale: 1, color: "#ffffff", duration: 0.2, overwrite: "auto", ease: "power2.out" });
+  }
+  counterQueue = counterQueue.then(syncWorldClick).catch(() => {
+    pendingWorldClicks = Math.max(0, pendingWorldClicks - 1);
     const nextLocal = Number(localStorage.getItem("zhuiy-world-button") || 0) + 1;
     localStorage.setItem("zhuiy-world-button", nextLocal);
-    document.querySelector("#global-count").textContent = formatCount(nextLocal);
-    updateCounterStatus("先记在这台设备上，等宇宙恢复连接", "Saved on this device until the universe reconnects");
-  } finally {
-    window.setTimeout(() => {
-      button.disabled = false;
-      button.classList.remove("is-pressed");
-    }, 380);
-  }
+    updateCounterStatus("这次点击暂存本机，连接恢复后再说", "This click is saved locally for now");
+  });
 });
 
 drawStarfield();
@@ -176,9 +191,8 @@ if (window.gsap) {
     (context) => {
       if (context.conditions.reduceMotion) return;
       gsap.from(".hero-copy > *", { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.09, ease: "power3.out" });
-      gsap.from(".hero-orbit", { autoAlpha: 0, scale: 0.88, rotation: -8, duration: 1.2, ease: "back.out(1.35)" });
+      gsap.from(".hero-collage", { autoAlpha: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.25)" });
       gsap.to(".avatar-wrap", { y: -10, duration: 2.8, repeat: -1, yoyo: true, ease: "sine.inOut" });
-      gsap.to(".orbit-one", { rotation: 360, duration: 28, repeat: -1, ease: "none" });
       gsap.to(".equalizer i", { scaleY: () => 0.45 + Math.random() * 1.2, duration: 0.5, stagger: { each: 0.06, from: "random" }, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
       const observer = new IntersectionObserver((entries) => {
@@ -194,14 +208,14 @@ if (window.gsap) {
 }
 
 const avatar = document.querySelector(".avatar-wrap");
-document.querySelector(".hero-orbit").addEventListener("pointermove", (event) => {
+document.querySelector(".hero-collage").addEventListener("pointermove", (event) => {
   if (!window.gsap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const rect = event.currentTarget.getBoundingClientRect();
   const x = (event.clientX - rect.left) / rect.width - 0.5;
   const y = (event.clientY - rect.top) / rect.height - 0.5;
   gsap.to(avatar, { rotationY: x * 12, rotationX: -y * 12, x: x * 10, duration: 0.5, overwrite: "auto", ease: "power2.out" });
 });
-document.querySelector(".hero-orbit").addEventListener("pointerleave", () => {
+document.querySelector(".hero-collage").addEventListener("pointerleave", () => {
   if (window.gsap) gsap.to(avatar, { rotationY: 0, rotationX: 0, x: 0, duration: 0.7, overwrite: "auto", ease: "power2.out" });
 });
 
