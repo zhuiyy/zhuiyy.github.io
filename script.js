@@ -61,6 +61,22 @@ document.querySelector("#language-switch").addEventListener("click", () => {
   }
 });
 
+document.querySelector(".geb-card").addEventListener("click", () => {
+  if (!window.gsap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  gsap.to(".geb-symbol i", {
+    rotation: (index) => {
+      const direction = index % 2 === 0 ? 1 : -1;
+      const extraTurn = Math.floor(Math.random() * 3) * 180 + 24 + Math.floor(Math.random() * 96);
+      return `+=${direction * (360 + extraTurn)}`;
+    },
+    scale: () => 0.92 + Math.random() * 0.18,
+    duration: 0.78,
+    stagger: { each: 0.055, from: "random" },
+    overwrite: "auto",
+    ease: "back.out(1.35)"
+  });
+});
+
 const counterEndpoint = "https://counterapi.com/api/zhuiyy.github.io/press/global-human-button";
 const counterHeaders = {
   "embed-js-key": "1f8g291a-0ab0-4382-9296-e9516c5ebc4e",
