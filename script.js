@@ -22,7 +22,7 @@ function drawStarfield() {
     const radius = random(index + 200) * 1.55 + 0.3;
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2);
-    context.fillStyle = index % 11 === 0 ? "#f3c969" : "rgba(255,255,255,.72)";
+    context.fillStyle = index % 11 === 0 ? "#e9b85d" : "rgba(255,255,255,.72)";
     context.fill();
   }
 }
@@ -61,26 +61,19 @@ document.querySelector("#language-switch").addEventListener("click", () => {
   }
 });
 
-const recursionLines = [
-  { zh: "这里", en: "here" },
-  { zh: "这里的这里", en: "here's here" },
-  { zh: "这里的这里的这里", en: "here inside here's here" },
-  { zh: "再小就要碰到排版了", en: "Any smaller and typography complains" }
-];
 let recursionDepth = 0;
 document.querySelector("#recursion-button").addEventListener("click", () => {
-  const stage = document.querySelector("#recursion-stage");
-  const item = document.createElement("span");
-  const line = recursionLines[recursionDepth % recursionLines.length];
-  item.className = "mini-here";
-  item.dataset.zh = line.zh;
-  item.dataset.en = line.en;
-  item.textContent = line[state.language];
-  item.style.setProperty("--size", `${Math.max(48, 98 - recursionDepth * 14)}px`);
-  stage.append(item);
   recursionDepth += 1;
-  if (stage.children.length > 4) stage.firstElementChild.remove();
-  if (window.gsap) gsap.from(item, { autoAlpha: 0, scale: 0.2, rotation: -18, duration: 0.5, ease: "back.out(1.8)" });
+  if (window.gsap) {
+    gsap.to(".geb-symbol i", {
+      rotation: (index) => (recursionDepth * (index + 1) * (index % 2 ? -9 : 9)) % 360,
+      scale: (index) => 1 + index * 0.04,
+      duration: 0.38,
+      stagger: 0.035,
+      overwrite: "auto",
+      ease: "back.out(1.6)"
+    });
+  }
 });
 
 const counterEndpoint = "https://counterapi.com/api/zhuiyy.github.io/press/global-human-button";
@@ -168,7 +161,7 @@ document.querySelector("#world-button").addEventListener("click", (event) => {
   renderWorldCount(displayedWorldCount + 1);
   updateCounterStatus("已收到，正在同步这一次点击", "Received—syncing this click");
   if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    gsap.fromTo("#global-count", { scale: 1.12, color: "#f3c969" }, { scale: 1, color: "#ffffff", duration: 0.2, overwrite: "auto", ease: "power2.out" });
+    gsap.fromTo("#global-count", { scale: 1.12, color: "#e9b85d" }, { scale: 1, color: "#ffffff", duration: 0.2, overwrite: "auto", ease: "power2.out" });
   }
   counterQueue = counterQueue.then(syncWorldClick).catch(() => {
     pendingWorldClicks = Math.max(0, pendingWorldClicks - 1);

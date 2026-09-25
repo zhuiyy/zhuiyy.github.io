@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1026" />
     <meta name="description" content="Zhuiy 的个人主页：音乐、GEB、观星，以及一些正在发生的念头。" />
     <title>Zhuiy — a small universe</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1026'/%3E%3Cpath d='M15 20h34L22 45h28' fill='none' stroke='%23f3c969' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='49' cy='15' r='5' fill='%23ff5b45'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101722'/%3E%3Cpath d='M15 20h34L22 45h28' fill='none' stroke='%23e9b85d' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='49' cy='15' r='5' fill='%23ec6a5c'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -45,6 +45,11 @@
         <div class="hero-collage" aria-label="Zhuiy's visual notebook">
           <div class="collage-sheet sheet-back"><span>REC / 00:12:08</span></div>
           <div class="collage-sheet sheet-mid"><span>SIDE A</span></div>
+          <div class="collage-sheet sheet-front">
+            <strong>Z.</strong>
+            <div class="folio-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <small>FIELD NOTES<br />01—∞</small>
+          </div>
           <figure class="avatar-wrap">
             <img src="assets/origin.jpg" alt="Zhuiy 的手绘头像：戴着高帽、咧嘴笑的小人" />
           </figure>
@@ -63,21 +68,15 @@
         </header>
 
         <div class="signal-grid">
-          <article class="signal-card geb-card reveal">
+          <button class="signal-card geb-card reveal" id="recursion-button" type="button" aria-label="Play with a recursive G">
             <div class="card-topline">
               <span>GEB / RECURSION</span>
               <span>∞</span>
             </div>
-            <h3 data-zh="这张卡片正在读这张卡片。" data-en="This card is reading this card.">这张卡片正在读这张卡片。</h3>
-            <p data-zh="喜欢《哥德尔、艾舍尔、巴赫》，尤其喜欢当严肃的问题拐个弯，突然变成笑话。" data-en="I like Gödel, Escher, Bach—especially when a serious question turns a corner and unexpectedly becomes a joke.">喜欢《哥德尔、艾舍尔、巴赫》，尤其喜欢当严肃的问题拐个弯，突然变成笑话。</p>
-            <button class="recursion-button" id="recursion-button" type="button">
-              <span data-zh="打开一个更小的这里" data-en="Open a smaller here">打开一个更小的这里</span>
-              <span aria-hidden="true">↳</span>
-            </button>
-            <div class="recursion-stage" id="recursion-stage" aria-live="polite"></div>
-          </article>
+            <span class="geb-symbol" aria-hidden="true"><i>G</i><i>G</i><i>G</i></span>
+          </button>
 
-          <article class="signal-card music-card reveal">
+          <a class="signal-card music-card reveal" href="https://zhuiyy.github.io/My-Discs/web/index.html" target="_blank" rel="noreferrer" aria-label="Visit My Discs">
             <div class="card-topline">
               <span>MUSIC / SOUND</span>
               <span>02:17</span>
@@ -85,12 +84,8 @@
             <div class="equalizer" aria-hidden="true">
               <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
             </div>
-            <h3 data-zh="弹琴、做声音，也认真听。" data-en="Playing, making, and listening closely.">弹琴、做声音，也认真听。</h3>
-            <p data-zh="钢琴、音乐制作、古典音乐会，以及一张唱片如何把某个下午永久保存下来。" data-en="Piano, music production, classical concerts—and how a record can preserve an afternoon indefinitely.">钢琴、音乐制作、古典音乐会，以及一张唱片如何把某个下午永久保存下来。</p>
-            <a href="https://zhuiyy.github.io/My-Discs/web/index.html" target="_blank" rel="noreferrer">
-              <span data-zh="去唱片架" data-en="Visit the record shelf">去唱片架</span> ↗
-            </a>
-          </article>
+            <span class="card-arrow" aria-hidden="true">↗</span>
+          </a>
 
           <article class="signal-card sky-card reveal">
             <div class="card-topline">
@@ -105,8 +100,6 @@
               <span style="--x: 89%; --y: 58%; --s: 4px"></span>
               <i class="line line-a"></i><i class="line line-b"></i><i class="line line-c"></i><i class="line line-d"></i>
             </div>
-            <h3 data-zh="抬头是一种低成本的远行。" data-en="Looking up is inexpensive long-distance travel.">抬头是一种低成本的远行。</h3>
-            <p data-zh="观星和天文摄影让我接受：有些光抵达时，它的故事早就结束了。" data-en="Stargazing and astrophotography remind me that some light arrives long after its story has ended.">观星和天文摄影让我接受：有些光抵达时，它的故事早就结束了。</p>
           </article>
         </div>
       </section>
