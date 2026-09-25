@@ -61,21 +61,6 @@ document.querySelector("#language-switch").addEventListener("click", () => {
   }
 });
 
-let recursionDepth = 0;
-document.querySelector("#recursion-button").addEventListener("click", () => {
-  recursionDepth += 1;
-  if (window.gsap) {
-    gsap.to(".geb-symbol i", {
-      rotation: (index) => (recursionDepth * (index + 1) * (index % 2 ? -9 : 9)) % 360,
-      scale: (index) => 1 + index * 0.04,
-      duration: 0.38,
-      stagger: 0.035,
-      overwrite: "auto",
-      ease: "back.out(1.6)"
-    });
-  }
-});
-
 const counterEndpoint = "https://counterapi.com/api/zhuiyy.github.io/press/global-human-button";
 const counterHeaders = {
   "embed-js-key": "1f8g291a-0ab0-4382-9296-e9516c5ebc4e",
