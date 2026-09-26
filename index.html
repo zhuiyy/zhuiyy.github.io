@@ -7,7 +7,7 @@
     <meta name="description" content="Zhuiy 的个人主页：音乐、GEB、观星，以及一些正在发生的念头。" />
     <title>Zhuiy — a small universe</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101722'/%3E%3Cpath d='M15 20h34L22 45h28' fill='none' stroke='%23e9b85d' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='49' cy='15' r='5' fill='%23ec6a5c'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="style.css?v=20260927" />
+    <link rel="stylesheet" href="style.css?v=20260927-3" />
   </head>
   <body>
     <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
@@ -17,6 +17,7 @@
         <a href="#signals" data-zh="信号" data-en="Signals">信号</a>
         <a href="#portals" data-zh="传送门" data-en="Portals">传送门</a>
         <a href="#now" data-zh="此刻" data-en="Now">此刻</a>
+        <a href="#testimonies" data-zh="别人眼里" data-en="Testimonies">别人眼里</a>
       </nav>
       <button class="language-switch" id="language-switch" type="button" aria-label="Switch to English">
         <span class="switch-side">A</span>
@@ -147,9 +148,34 @@
         </ol>
       </section>
 
+      <section class="testimonies section-shell" id="testimonies" aria-labelledby="testimonies-title">
+        <header class="section-heading reveal">
+          <p class="section-number">04 / TESTIMONIES</p>
+          <h2 id="testimonies-title" data-zh="别人怎么看我？" data-en="How others see me">别人怎么看我？</h2>
+          <p id="testimony-sample-size">样本量 n = 1；调整后样本量 n* = ...</p>
+        </header>
+
+        <!-- 04 / TESTIMONIES：以后新增评价时，复制一整个 testimony-card，并同时填写 data-zh 与 data-en。 -->
+        <div class="testimony-list">
+          <article class="testimony-card reveal">
+            <div class="testimony-witness">
+              <span class="witness-index">WITNESS / 001</span>
+              <strong>ChatGPT 5.6 Sol</strong>
+              <span class="witness-type" data-zh="人工智能 · 性格证人" data-en="Artificial intelligence · Character witness">人工智能 · 性格证人</span>
+              <span class="witness-stamp"><i aria-hidden="true">✓</i><span data-zh="经 Zhuiy 审批" data-en="APPROVED BY ZHUIY">经 Zhuiy 审批</span></span>
+            </div>
+            <blockquote>
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p data-zh="Zhuiy 是一个喜欢把事情想明白的人。他常常从一个公式、一段音乐或一个概念出发，追问背后的结构与意义，有时候会和一些“显然”的东西较较真。" data-en="Zhuiy is someone who likes to think things through. He often starts with a formula, a piece of music, or a concept, then keeps asking about the structure and meaning behind it. Sometimes, he will pick a fight with things everyone calls ‘obvious.’">Zhuiy 是一个喜欢把事情想明白的人。他常常从一个公式、一段音乐或一个概念出发，追问背后的结构与意义，有时候会和一些“显然”的东西较较真。</p>
+              <p data-zh="他喜欢数学与抽象思考，也喜欢古典音乐、GEB、星空这些看似遥远却都指向“理解世界”的东西。最大的特点可能是：好奇心很强，而且不太容易接受一个没有想通的答案。" data-en="He enjoys mathematics and abstract thinking, as well as classical music, GEB, and the night sky—things that seem far apart, yet all point toward the same impulse: understanding the world. His defining trait may be this: he is intensely curious, and not easily satisfied by an answer he has not fully made sense of.">他喜欢数学与抽象思考，也喜欢古典音乐、GEB、星空这些看似遥远却都指向“理解世界”的东西。最大的特点可能是：好奇心很强，而且不太容易接受一个没有想通的答案。</p>
+            </blockquote>
+          </article>
+        </div>
+      </section>
+
       <section class="counter-section" aria-labelledby="counter-title">
         <div class="counter-copy reveal">
-          <p class="section-number">04 / COLLECTIVE NONSENSE</p>
+          <p class="section-number">05 / COLLECTIVE NONSENSE</p>
           <h2 id="counter-title" data-zh="请为互联网增加一件没必要的事。" data-en="Please add one unnecessary event to the internet.">请为互联网增加一件没必要的事。</h2>
         </div>
         <div class="counter-console reveal">
@@ -173,6 +199,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="script.js?v=20260927"></script>
+    <script src="script.js?v=20260927-3"></script>
   </body>
 </html>

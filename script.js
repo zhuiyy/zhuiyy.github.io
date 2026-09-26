@@ -1,5 +1,14 @@
 const state = { language: "zh" };
 
+function updateTestimonySampleSize() {
+  const output = document.querySelector("#testimony-sample-size");
+  if (!output) return;
+  const sampleSize = document.querySelectorAll(".testimony-card").length;
+  output.textContent = state.language === "zh"
+    ? `样本量 n = ${sampleSize}；调整后样本量 n* = ...`
+    : `Sample size n = ${sampleSize}; adjusted sample size n* = ...`;
+}
+
 function drawStarfield() {
   const canvas = document.querySelector("#starfield");
   const context = canvas.getContext("2d");
@@ -37,6 +46,7 @@ function setLanguage(nextLanguage) {
   const button = document.querySelector("#language-switch");
   button.setAttribute("aria-label", nextLanguage === "zh" ? "Switch to English" : "切换到中文");
   button.querySelector(".switch-side").textContent = nextLanguage === "zh" ? "A" : "B";
+  updateTestimonySampleSize();
 }
 
 document.querySelector("#language-switch").addEventListener("click", () => {
@@ -234,7 +244,13 @@ document.querySelector("#world-button").addEventListener("click", (event) => {
 });
 
 drawStarfield();
+updateTestimonySampleSize();
 window.addEventListener("resize", drawStarfield);
+
+const testimonyList = document.querySelector(".testimony-list");
+if (testimonyList) {
+  new MutationObserver(updateTestimonySampleSize).observe(testimonyList, { childList: true });
+}
 
 if (window.gsap) {
   const media = gsap.matchMedia();

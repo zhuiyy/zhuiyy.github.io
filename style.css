@@ -301,6 +301,141 @@ h1 i { color: var(--tomato); font-family: Georgia, serif; font-weight: 400; }
 .thought-list p { margin: 0; font-family: Georgia, "Times New Roman", "Songti SC", serif; font-size: clamp(1.15rem, 1.8vw, 1.7rem); line-height: 1.35; text-wrap: pretty; }
 .thought-list span { color: rgba(255,255,255,.35); font-size: .72rem; text-align: right; }
 
+.testimonies {
+  border-top: 1px solid var(--line-dark);
+}
+
+.testimony-list {
+  position: relative;
+}
+
+.testimony-list::before {
+  content: "ARCHIVE / OPINIONS";
+  position: absolute;
+  right: 0;
+  top: -30px;
+  color: rgba(255,255,255,.28);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .62rem;
+  letter-spacing: .13em;
+}
+
+.testimony-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, .72fr) minmax(0, 1.7fr);
+  gap: clamp(36px, 6vw, 96px);
+  overflow: hidden;
+  padding: clamp(36px, 5vw, 72px);
+  border-radius: 28px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 26px 70px rgba(0,0,0,.18);
+}
+
+.testimony-card::after {
+  content: "001";
+  position: absolute;
+  right: -10px;
+  bottom: -55px;
+  color: rgba(73,103,214,.08);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(9rem, 22vw, 20rem);
+  font-weight: 700;
+  letter-spacing: -.12em;
+  line-height: .8;
+  pointer-events: none;
+}
+
+.testimony-witness {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding-right: 28px;
+  border-right: 1px solid rgba(16,23,34,.18);
+}
+
+.witness-index {
+  color: var(--lavender);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.testimony-witness strong {
+  margin: 24px 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.9rem, 3vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: 1;
+}
+
+.witness-type {
+  color: rgba(16,23,34,.55);
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.witness-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 7px 11px 7px 8px;
+  border: 2px double var(--tomato);
+  color: var(--tomato);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  transform: rotate(-4deg);
+}
+
+.witness-stamp i {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: .78rem;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+.testimony-card blockquote {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 14px 0 0;
+}
+
+.testimony-card blockquote p {
+  margin: 0 0 1.25em;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: clamp(1.22rem, 2vw, 1.85rem);
+  letter-spacing: -.018em;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.testimony-card blockquote p:last-child { margin-bottom: 0; }
+
+.quote-mark {
+  position: absolute;
+  left: -.08em;
+  top: -.3em;
+  color: var(--acid);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 7.5rem;
+  line-height: 1;
+  transform: translateX(-55%);
+}
+
 .counter-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -370,6 +505,9 @@ footer > a:last-child { justify-self: end; }
   }
   .signal-grid { grid-template-columns: 1fr; }
   .portal { grid-template-columns: 54px minmax(0,1fr) 54px; }
+  .testimony-card { grid-template-columns: 1fr; gap: 42px; }
+  .testimony-witness { padding: 0 0 34px; border-right: 0; border-bottom: 1px solid rgba(16,23,34,.18); }
+  .witness-stamp { margin-top: 28px; }
   .counter-section { grid-template-columns: 1fr; width: min(100% - 32px, var(--max)); padding: 42px 24px; }
   footer { width: min(100% - 32px, var(--max)); }
 }
@@ -384,6 +522,10 @@ footer > a:last-child { justify-self: end; }
   .portal-mark { width: 42px; height: 42px; font-size: 1.15rem; }
   .thought-list li { grid-template-columns: 1fr 28px; gap: 12px; padding: 20px 0; }
   .thought-list time { grid-column: 1 / -1; }
+  .testimony-list::before { display: none; }
+  .testimony-card { gap: 30px; padding: 32px 24px; border-radius: 20px; }
+  .testimony-card blockquote { padding-left: 16px; }
+  .quote-mark { left: .05em; top: -.45em; font-size: 5.5rem; transform: translateX(-35%); }
   .counter-section { margin-bottom: 32px; }
   .counter-screen strong { font-size: 3.5rem; }
   footer { grid-template-columns: 1fr auto; }

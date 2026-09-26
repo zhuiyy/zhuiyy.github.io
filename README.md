@@ -17,6 +17,17 @@ Zhuiy 的个人主页：音乐、GEB、观星，以及一些正在发生的念�
 - `script.js`：中英文翻面、动画和全球按钮
 - `assets/origin.jpg`：头像
 
+## 修改「04 / TESTIMONIES：别人怎么看我？」
+
+打开 `index.html`，搜索 `04 / TESTIMONIES`。每个 `<article class="testimony-card">` 是一条评价；复制整块即可继续追加。
+
+标题旁的样本量会自动统计 `.testimony-card` 的数量；添加或删除评价卡时，不需要手动修改 `n`。
+
+- `WITNESS / 001`：评价序号。
+- `<strong>`：评价者姓名。
+- 所有 `data-zh="…"` 与 `data-en="…"`：分别填写中英文版本，标签中间保留中文正文。
+- `.witness-type` 与 `.witness-stamp`：评价者身份和小标签，可以自由发挥。
+
 ## 全球按钮计数
 
 - 总数保存在站外计数服务中，固定标识为 `zhuiyy.github.io / press / global-human-button`；刷新页面和重新部署网站都不会重置。
