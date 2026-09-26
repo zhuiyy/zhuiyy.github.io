@@ -305,6 +305,19 @@ h1 i { color: var(--tomato); font-family: Georgia, serif; font-weight: 400; }
   border-top: 1px solid var(--line-dark);
 }
 
+.testimonies .section-heading {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "number"
+    "title"
+    "note";
+  gap: 14px;
+}
+
+.testimonies .section-heading > p:not(.section-number) {
+  margin-top: 2px;
+}
+
 .testimony-list {
   position: relative;
 }
