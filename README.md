@@ -20,5 +20,6 @@ Zhuiy 的个人主页：音乐、GEB、观星，以及一些正在发生的念�
 ## 全球按钮计数
 
 - 总数保存在站外计数服务中，固定标识为 `zhuiyy.github.io / press / global-human-button`；刷新页面和重新部署网站都不会重置。
-- 浏览器会把最后一次见到的总数缓存在 `localStorage` 的 `zhuiy-world-count-cache` 中。计数服务短暂不可用时，页面会继续显示并记录这个数，而不是回到零。
+- 浏览器会把服务器确认的总数缓存在 `localStorage` 的 `zhuiy-world-count-cache` 中；联网读取成功时始终以全球值为准，避免不同设备被旧缓存卡在不同数字。
+- 暂时同步失败的点击保存在 `zhuiy-world-count-pending` 中，页面重新联网后会继续上传，不会只在当前设备上虚增。
 - 计数使用大整数处理；从 `1e16` 开始自动改用科学计数法，避免数字撑破显示区域。

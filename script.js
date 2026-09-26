@@ -80,6 +80,7 @@ document.querySelector(".geb-card").addEventListener("click", () => {
 // Persistent external identity: deployments can change, but this tuple must not.
 const counterEndpoint = "https://counterapi.com/api/zhuiyy.github.io/press/global-human-button";
 const counterCacheKey = "zhuiy-world-count-cache";
+const counterPendingKey = "zhuiy-world-count-pending";
 const counterHeaders = {
   "embed-js-key": "1f8g291a-0ab0-4382-9296-e9516c5ebc4e",
   token1: "b1cde786-1033-4830-90a1-73dd35d9596c"
@@ -95,6 +96,27 @@ function toCount(value) {
 
 function maxCount(left, right) {
   return left > right ? left : right;
+}
+
+function readStoredValue(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function storeValue(key, value) {
+  try {
+    localStorage.setItem(key, String(value));
+  } catch {
+    // The global counter still works when storage is unavailable.
+  }
+}
+
+function readPendingClicks() {
+  const value = Number(readStoredValue(counterPendingKey));
+  return Number.isSafeInteger(value) && value > 0 ? value : 0;
 }
 
 function parseCounterValue(payload) {
@@ -121,16 +143,18 @@ function updateCounterStatus(zh, en) {
 }
 
 async function readWorldCount() {
-  const cachedCount = toCount(localStorage.getItem(counterCacheKey));
-  if (cachedCount > 0n) renderWorldCount(cachedCount);
+  if (confirmedWorldCount > 0n || pendingWorldClicks > 0) {
+    renderWorldCount(confirmedWorldCount + BigInt(pendingWorldClicks));
+  }
   try {
     const response = await fetch(`${counterEndpoint}?readOnly=true`, { headers: counterHeaders });
     if (!response.ok) throw new Error("counter unavailable");
-    const remoteCount = parseCounterValue(await response.text());
-    renderWorldCount(maxCount(displayedWorldCount, remoteCount + BigInt(pendingWorldClicks)));
+    confirmedWorldCount = parseCounterValue(await response.text());
+    storeValue(counterCacheKey, confirmedWorldCount);
+    renderWorldCount(confirmedWorldCount + BigInt(pendingWorldClicks));
     updateCounterStatus("全人类目前的共同成果", "Humanity's collective achievement so far");
   } catch {
-    renderWorldCount(maxCount(displayedWorldCount, cachedCount + BigInt(pendingWorldClicks)));
+    renderWorldCount(confirmedWorldCount + BigInt(pendingWorldClicks));
     updateCounterStatus("宇宙暂时失联，先记在这台设备上", "The universe is offline; keeping count on this device");
   }
 }
@@ -160,25 +184,38 @@ function launchCounterSparks(button) {
   }
 }
 
-let displayedWorldCount = 0n;
-let pendingWorldClicks = 0;
-let counterQueue = Promise.resolve();
+let confirmedWorldCount = toCount(readStoredValue(counterCacheKey));
+let pendingWorldClicks = readPendingClicks();
+let displayedWorldCount = confirmedWorldCount + BigInt(pendingWorldClicks);
+let counterSyncInProgress = false;
 
 function renderWorldCount(value) {
   displayedWorldCount = toCount(value);
   const count = document.querySelector("#global-count");
   count.textContent = formatCount(displayedWorldCount);
   count.dataset.value = displayedWorldCount.toString();
-  localStorage.setItem(counterCacheKey, displayedWorldCount.toString());
 }
 
-async function syncWorldClick() {
-  const response = await fetch(counterEndpoint, { headers: counterHeaders });
-  if (!response.ok) throw new Error("counter unavailable");
-  const remoteCount = parseCounterValue(await response.text());
-  pendingWorldClicks -= 1;
-  renderWorldCount(maxCount(displayedWorldCount, remoteCount + BigInt(pendingWorldClicks)));
-  updateCounterStatus("你刚刚改变了世界（约 0%）", "You changed the world (by approximately 0%)");
+async function flushPendingWorldClicks() {
+  if (counterSyncInProgress || pendingWorldClicks === 0) return;
+  counterSyncInProgress = true;
+  try {
+    while (pendingWorldClicks > 0) {
+      const response = await fetch(counterEndpoint, { headers: counterHeaders });
+      if (!response.ok) throw new Error("counter unavailable");
+      const remoteCount = parseCounterValue(await response.text());
+      confirmedWorldCount = maxCount(confirmedWorldCount, remoteCount);
+      pendingWorldClicks -= 1;
+      storeValue(counterCacheKey, confirmedWorldCount);
+      storeValue(counterPendingKey, pendingWorldClicks);
+      renderWorldCount(confirmedWorldCount + BigInt(pendingWorldClicks));
+    }
+    updateCounterStatus("你刚刚改变了世界（约 0%）", "You changed the world (by approximately 0%)");
+  } catch {
+    updateCounterStatus("点击已保存在本机，联网后会自动重试", "Click saved on this device; it will retry when online");
+  } finally {
+    counterSyncInProgress = false;
+  }
 }
 
 document.querySelector("#world-button").addEventListener("click", (event) => {
@@ -187,15 +224,13 @@ document.querySelector("#world-button").addEventListener("click", (event) => {
   window.setTimeout(() => button.classList.remove("is-pressed"), 90);
   launchCounterSparks(button);
   pendingWorldClicks += 1;
-  renderWorldCount(displayedWorldCount + 1n);
+  storeValue(counterPendingKey, pendingWorldClicks);
+  renderWorldCount(confirmedWorldCount + BigInt(pendingWorldClicks));
   updateCounterStatus("已收到，正在同步这一次点击", "Received—syncing this click");
   if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     gsap.fromTo("#global-count", { scale: 1.12, color: "#e9b85d" }, { scale: 1, color: "#ffffff", duration: 0.2, overwrite: "auto", ease: "power2.out" });
   }
-  counterQueue = counterQueue.then(syncWorldClick).catch(() => {
-    pendingWorldClicks = Math.max(0, pendingWorldClicks - 1);
-    updateCounterStatus("这次点击暂存本机，连接恢复后再说", "This click is saved locally for now");
-  });
+  counterReady.then(flushPendingWorldClicks);
 });
 
 drawStarfield();
@@ -239,4 +274,7 @@ document.querySelector(".hero-collage").addEventListener("pointerleave", () => {
   if (window.gsap) gsap.to(avatar, { rotationY: 0, rotationX: 0, x: 0, duration: 0.7, overwrite: "auto", ease: "power2.out" });
 });
 
-readWorldCount();
+window.addEventListener("online", () => counterReady.then(flushPendingWorldClicks));
+
+const counterReady = readWorldCount();
+counterReady.then(flushPendingWorldClicks);
