@@ -221,8 +221,6 @@ h1 i { color: var(--tomato); font-family: Georgia, serif; font-weight: 400; }
 
 .music-card { background: var(--tomato); color: #fff; }
 .sky-card { background: var(--cyan); }
-.card-arrow { position: absolute; right: 22px; bottom: 18px; font-size: 1.35rem; }
-
 .equalizer {
   display: flex;
   align-items: end;
